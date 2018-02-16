@@ -2,20 +2,20 @@
 
 (defn get-all-cells-to-check [cells]
   (->> (map (fn [[x y]]
-             (for [step_x [-1 0 1]
-                   steps_y [-1 0 1]]
-               [(+ x step_x) (+ y steps_y)]))
-           cells)
-      (apply concat)
-      distinct))
+              (for [step_x [-1 0 1]
+                    step_y [-1 0 1]]
+                [(+ x step_x) (+ y step_y)]))
+            cells)
+       (apply concat)
+       distinct))
 
 (defn- get-neighbours [[x y]]
   (filter #(not (nil? %))
           (for [step_x [-1 0 1]
-                             step_y [-1 0 1]]
-                  (if (= step_x step_y 0)
-                    nil
-                    [(+ x step_x) (+ y step_y)]))))
+                step_y [-1 0 1]]
+            (if (= step_x step_y 0)
+              nil
+              [(+ x step_x) (+ y step_y)]))))
 
 (defn get-live-neighbour-size [[x y] state-matrix]
   (let [neighbours (set (get-neighbours [x y]))
@@ -48,3 +48,8 @@
                                     nil)))
                               (get-all-cells-to-check matrix))]
     (filter #(not= nil %) cells-next-state)))
+
+
+(def initial-matrix [[5, 5], [6, 5], [7, 5], [5, 6], [6, 6], [7, 6]])
+
+(sort (gol-next-state initial-matrix))
