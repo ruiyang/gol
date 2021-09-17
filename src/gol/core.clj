@@ -23,7 +23,6 @@
         live-neighbours (clojure.set/intersection neighbours state-matrix)]
     (count live-neighbours)))
 
-
 (defn calculate-cell-next-state [live? live-neighbour-size]
   (if live?
     (cond
@@ -49,7 +48,30 @@
                               (get-all-cells-to-check matrix))]
     (filter #(not= nil %) cells-next-state)))
 
-
 (def initial-matrix [[5, 5], [6, 5], [7, 5], [5, 6], [6, 6], [7, 6]])
 
-(sort (gol-next-state initial-matrix))
+(def glider [[2 4] [3 2] [3 4] [4 3] [4 4]])
+(def blinker [[1, 2] [2, 2] [3, 2]])
+
+
+(for [i (range 1 100)]
+  (-> i
+      println))
+
+(defn conway [n initial-state]
+  (do
+    (println "============")
+    (println initial-state)
+    (loop [cnt n
+           state initial-state]
+      (if (zero? cnt)
+        state
+        (let [next-state (sort (gol-next-state state))]
+          (do
+            (println next-state)
+            (recur (dec cnt) next-state)))))))
+
+
+;; (conway 100 glider)
+
+
