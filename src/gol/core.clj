@@ -61,17 +61,17 @@
 (defn conway [n initial-state]
   (do
     (println "============")
-    (println initial-state)
+    (println 0 initial-state)
     (loop [cnt n
            state initial-state]
       (if (zero? cnt)
         state
         (let [next-state (sort (gol-next-state state))]
           (do
-            (println next-state)
+            (println (* -1 (- cnt 100)) next-state)
             (recur (dec cnt) next-state)))))))
 
 
-;; (conway 100 glider)
+(conway 100 glider)
 
 
